@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Terminal">
+  <section class="hero g" style="background:var(--p)">
+    <div class="kick">Sandbox bash · runs 100% in your browser · nothing can break</div>
+    <h1>🐚 Terminal dojo</h1>
+    <p>Real bash syntax: pipes, loops, if/case, functions, heredocs, <code>$(…)</code>, <code>set -euo pipefail</code>, grep/sed/awk/sort/uniq, tar, crontab. Write scripts in the editor, then clear missions: each one is auto-checked (+75 XP).</p>
+  </section>
+  <div class="tgrid" data-terminal-app>
+    <div class="term-box">
+      <div class="term-bar"><i></i><i></i><i></i><span style="margin-left:8px">hasan@cto: bash</span></div>
+      <div class="term" data-out></div>
+      <div class="term-in"><span class="ps" data-ps>hasan@cto:~$</span><input data-in spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="terminal input" /></div>
+      <div class="editor" data-editor>
+        <div class="row" style="gap:8px"><b style="color:var(--y)">📝</b><input data-edname value="hello.sh" aria-label="file name" />
+          <button class="btn" type="button" data-edsave>💾 Save (Ctrl+S)</button><button class="btn g" type="button" data-edrun>▶ Save + chmod + run (Ctrl+⏎)</button><button class="btn w" type="button" data-edclose>✕</button></div>
+        <textarea data-edtext spellcheck="false" aria-label="script editor"></textarea>
+      </div>
+    </div>
+    <aside>
+      <section class="card" style="margin-top:0"><h2 style="margin-top:0">🎯 Missions <span class="pill" style="border:2px solid #000" data-mcount>0/11</span></h2>
+        <p class="muted" style="margin:0">Open one, write the script, hit Check. Stuck? Hint → Solution → retype it.</p>
+        <div data-missions></div>
+      </section>
+    </aside>
+  </div>
+  <script type="module" src="/terminal.js"></script>
+</Base>

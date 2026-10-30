@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { days, weeks } from '../data/days';
-const BADGES = [['first','⚡','First Blood'],['runner','🧪','Lab Rat'],['perfect','🎯','Sniper'],['s3','🔥','On Fire'],['s7','☄️','Unstoppable'],['pom3','🍅','Deep Diver'],['ship','🚢','Shipper'],['boss1','🐉','Hydra Slayer'],['boss2','🌪️','Storm Breaker'],['boss3','👻','Leak Hunter'],['boss4','🔥','Dragon Tamer'],['god','👑','GOD MODE']];
+const BADGES = [['first','⚡','First Blood'],['runner','🧪','Lab Rat'],['perfect','🎯','Sniper'],['s3','🔥','On Fire'],['s7','☄️','Unstoppable'],['pom3','🍅','Deep Diver'],['ship','🚢','Shipper'],['boss1','🐉','Hydra Slayer'],['boss2','🌪️','Storm Breaker'],['boss3','👻','Leak Hunter'],['boss4','🔥','Dragon Tamer'],['god','👑','GOD MODE'],['lex','📖','Lexicon'],['cmd50','⌨️','Fingers of Fury'],['combo10','💥','Combo x10'],['shell','🐚','Shell Shocked'],['bashgod','🧙','Bash Wizard'],['recall','🧠','Total Recall']];
 ---
 <Base title="Dashboard">
   <section class="hero">
@@ -32,6 +32,11 @@ const BADGES = [['first','⚡','First Blood'],['runner','🧪','Lab Rat'],['perf
     </section>
   ))}
 
+  <section class="card recallcard"><h2>🧠 Recall Sprint</h2>
+    <p class="muted" style="margin-top:0">10 mixed items: due flashcards + commands you missed. ~3 minutes. +50 XP once a day.</p>
+    <div data-recall></div>
+    <div class="row"><a class="btn w" href="/terms">📖 Terms</a><a class="btn w" href="/drills">⌨️ Drills</a><a class="btn w" href="/terminal">🐚 Terminal</a></div>
+  </section>
   <section class="card"><h2>🏅 Badges</h2>
     <div class="badges">{BADGES.map(([id, i, n]) => <div class="badge" data-badge={id}><div class="i">{i}</div><div class="n">{n}</div></div>)}</div>
   </section>
@@ -44,4 +49,5 @@ const BADGES = [['first','⚡','First Blood'],['runner','🧪','Lab Rat'],['perf
     const t=new Date();const k=new Date(t-t.getTimezoneOffset()*6e4).toISOString().slice(0,10);
     document.querySelector(`[data-date="${k}"]`)?.classList.add('today');
   </script>
+<script type="module" src="/learn.js"></script>
 </Base>

@@ -3,12 +3,14 @@ import Base from '../../layouts/Base.astro';
 import Quiz from '../../components/Quiz.astro';
 import Sandbox from '../../components/Sandbox.astro';
 import { days, weeks } from '../../data/days';
+import { dayTerms, dayDrills } from '../../data/learn';
 export function getStaticPaths() { return days.map((d, i) => ({ params: { slug: d.slug }, props: { d, prev: days[i - 1], next: days[i + 1] } })); }
 const { d, prev, next } = Astro.props;
 const wk = weeks[d.week - 1];
 const heroCls = d.week === 2 ? 'hero p' : d.week === 3 ? 'hero g' : 'hero';
 const blocks = d.kind === 'learn' ? (d.slug === 'w1d3' ? 'AM 6:15–7:45 only (TLC launch)' : 'AM 6:15–7:45 learn · PM 8:15–9:45 build') : d.kind === 'review' ? 'Sat 9–11 AM review' : 'Sun 9 AM–2 PM SHIP';
 const total = d.missions.reduce((a, m) => a + m.min, 0);
+const dt = dayTerms(d.slug), dd = dayDrills(d.slug);
 const repo = 'https://github.com/genesisprime01/cto-sprint';
 ---
 <Base title={`${d.slug.toUpperCase()} ${d.title}`}>
@@ -35,6 +37,17 @@ const repo = 'https://github.com/genesisprime01/cto-sprint';
     <p class="muted" style="margin-top:0">+20 XP per correct first try. Wrong answers show why: that’s where memory forms.</p>
     <Quiz id={d.slug} qs={d.quiz} />
   </section>
+
+  <section class="card daylearn" data-day-learn data-terms={dt.map((t) => t.id).join(',')} data-drills={dd.map((x) => x.id).join(',')}>
+    <h2>📖 5 terms for today</h2>
+    <div class="dterms">{dt.map((t) => <details class="term"><summary><b>{t.term}</b><span class="tag">{t.cat}</span></summary><p>{t.plain}</p><p class="muted"><b>Literally:</b> {t.literal}</p><pre>{t.example}</pre></details>)}</div>
+    <div class="row" style="margin-top:10px"><button class="btn p" type="button" data-flash5>🃏 Flash these 5</button><a class="btn w" href="/terms">All terms →</a></div>
+    <div data-flashwrap></div>
+    <h2 style="margin-top:22px">⌨️ 5 commands to type</h2>
+    <p class="muted" style="margin-top:0">Type each one. +10 XP per pass. More at <a href="/drills">/drills</a> and the <a href="/terminal">terminal dojo</a>.</p>
+    <div data-drillwrap></div>
+  </section>
+  <script type="module" src="/learn.js"></script>
 
   <section class="card">
     <h2>📚 Learn more</h2>

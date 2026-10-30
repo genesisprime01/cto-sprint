@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import { terms } from '../data/terms';
+---
+<Base title="Terms">
+  <section class="hero p">
+    <div class="kick">Lexicon · {terms.length} terms · Leitner spaced repetition</div>
+    <h1>📖 Speak CTO fluently</h1>
+    <p>Flip → say it out loud → be honest. Got it moves the card up a box (1 → 2 → 4 → 8 → 16 days). Missed drops it back to box 1. Box 3 = <b>+5 XP</b>, box 5 = <b>+5 XP</b> more.</p>
+  </section>
+  <div data-terms-app><p class="muted">Loading terms…</p></div>
+  <noscript><div class="tlist">{terms.map((t) => <details class="term"><summary><b>{t.term}</b></summary><p>{t.plain}</p></details>)}</div></noscript>
+  <script type="module" src="/learn.js"></script>
+</Base>

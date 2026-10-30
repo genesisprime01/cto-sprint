@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import { drills } from '../data/drills';
+---
+<Base title="Command Drills">
+  <section class="hero">
+    <div class="kick">{drills.length} drills · bash · git · docker · psql · SQL · python · supabase · vercel · ollama</div>
+    <h1>⌨️ Type it. Don't read it.</h1>
+    <p>Real scenario → you type the command → instant check (forgives spacing, quote style, flag order). 3 tries, hints, then the answer + why. +10 XP per drill, combos every 5 in a row, and a 60-second blitz.</p>
+  </section>
+  <div data-drills-app><p class="muted">Loading drills…</p></div>
+  <script type="module" src="/learn.js"></script>
+</Base>

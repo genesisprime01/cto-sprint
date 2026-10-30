@@ -1,7 +1,7 @@
 // CTO Sprint game engine: XP, levels, streaks, badges, quizzes, sandboxes, focus timer. All in localStorage.
 const KEY = 'cto-sprint-v1';
-const S = Object.assign({ xp: 0, got: {}, missions: {}, quiz: {}, days: {}, boss: {}, runs: 0, poms: 0, streak: { last: null, count: 0, best: 0 }, badges: {}, log: [] }, JSON.parse(localStorage.getItem(KEY) || '{}'));
-const save = () => localStorage.setItem(KEY, JSON.stringify(S));
+export const S = Object.assign({ cards: {}, drills: {}, combo: 0, shellm: {}, xp: 0, got: {}, missions: {}, quiz: {}, days: {}, boss: {}, runs: 0, poms: 0, streak: { last: null, count: 0, best: 0 }, badges: {}, log: [] }, JSON.parse(localStorage.getItem(KEY) || '{}'));
+export const save = () => localStorage.setItem(KEY, JSON.stringify(S));
 window.CTO = S;
 const TOTAL = +document.body.dataset.totalXp || 5000;
 const LEVELS = JSON.parse(document.body.dataset.levels || '[]');
@@ -20,13 +20,19 @@ export const BADGES = [
   ['boss3', '👻', 'Leak Hunter', 'Beat Week 3 boss'],
   ['boss4', '🔥', 'Dragon Tamer', 'Beat the final boss'],
   ['god', '👑', 'GOD MODE', 'All 28 days complete'],
+  ['lex', '📖', 'Lexicon', '25 terms to Leitner box 3+'],
+  ['cmd50', '⌨️', 'Fingers of Fury', 'Pass 50 command drills'],
+  ['combo10', '💥', 'Combo x10', '10 drills in a row, no misses'],
+  ['shell', '🐚', 'Shell Shocked', 'Clear your first terminal mission'],
+  ['bashgod', '🧙', 'Bash Wizard', 'Clear every terminal mission'],
+  ['recall', '🧠', 'Total Recall', 'Finish a Recall Sprint'],
 ];
 
-function toast(msg) {
+export function toast(msg) {
   const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
   document.body.appendChild(t); setTimeout(() => t.remove(), 2200);
 }
-function boom(x = innerWidth / 2, y = innerHeight / 3, n = 18) {
+export function boom(x = innerWidth / 2, y = innerHeight / 3, n = 18) {
   const em = ['⚡', '🔥', '✨', '💥', '🟧', '🟪', '🟩'];
   for (let i = 0; i < n; i++) {
     const e = document.createElement('span'); e.className = 'boom'; e.textContent = em[i % em.length];
@@ -35,7 +41,7 @@ function boom(x = innerWidth / 2, y = innerHeight / 3, n = 18) {
     document.body.appendChild(e); setTimeout(() => e.remove(), 1200);
   }
 }
-function badge(id) {
+export function badge(id) {
   if (S.badges[id]) return; S.badges[id] = localDay(); save();
   const b = BADGES.find(b => b[0] === id); if (b) setTimeout(() => { toast(`🏅 Badge unlocked: ${b[1]} ${b[2]}`); boom(innerWidth / 2, innerHeight / 2, 30); }, 900);
 }
@@ -55,7 +61,7 @@ export function award(key, xp, why, el) {
   return true;
 }
 function level() { const per = TOTAL / LEVELS.length; const i = Math.min(LEVELS.length - 1, Math.floor(S.xp / per)); return { i, name: LEVELS[i], pct: ((S.xp % per) / per) * 100, per }; }
-function hud() {
+export function hud() {
   const L = level();
   document.querySelectorAll('[data-hud=xp]').forEach(e => e.textContent = S.xp);
   document.querySelectorAll('[data-hud=level]').forEach(e => e.textContent = `Lv ${L.i + 1} · ${L.name}`);

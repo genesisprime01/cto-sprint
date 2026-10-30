@@ -1,0 +1,279 @@
+bash ¦ w1d1 ¦ Show the full path of the folder you're in. ¦ pwd ¦ print working directory ¦ pwd prints the absolute path of the current directory.
+bash ¦ w1d1 ¦ List ALL files here, including hidden ones, in long format. ¦ ls -la ‖ ls -al ‖ ls -l -a ¦ ls with -l (long) and -a (all) ¦ -a shows dotfiles like .env; -l shows permissions, owner, size, date.
+bash ¦ w1d1 ¦ Jump to your home directory. ¦ cd ‖ cd ~ ‖ cd $HOME ¦ cd with no argument ¦ cd with no argument (or ~) goes to $HOME.
+bash ¦ w1d1 ¦ Go up one folder. ¦ cd .. ¦ two dots = parent ¦ .. always means the parent directory.
+bash ¦ w1d1 ¦ Create projects/cto/notes, including any missing parent folders. ¦ mkdir -p projects/cto/notes ¦ mkdir needs a "parents" flag ¦ -p creates intermediate directories and doesn't error if they exist.
+bash ¦ w1d1 ¦ Create an empty file called notes.md. ¦ touch notes.md ¦ the command that updates timestamps ¦ touch creates the file if missing, otherwise just updates its modified time.
+bash ¦ w1d1 ¦ Print the PATH variable. ¦ echo $PATH ‖ echo "$PATH" ¦ echo + $ ¦ $PATH is the colon-separated list of directories searched for commands.
+bash ¦ w1d1 ¦ Set DATABASE_URL to postgres://localhost/dev so programs you launch can see it. ¦ export DATABASE_URL=postgres://localhost/dev ‖ export DATABASE_URL="postgres://localhost/dev" ¦ plain assignment isn't enough for child processes ¦ export puts the variable into the environment of child processes. No spaces around =.
+bash ¦ w1d1 ¦ Find which python3 executable will run. ¦ which python3 ‖ command -v python3 ‖ type python3 ¦ "which" one? ¦ which searches PATH and prints the first match.
+bash ¦ w1d1 ¦ Open the manual page for grep. ¦ man grep ¦ short for manual ¦ man pages document every flag. Press q to quit.
+bash ¦ w1d1 ¦ Show your recent command history. ¦ history ¦ the obvious word ¦ history lists previous commands; !42 reruns number 42.
+bash ¦ w1d1 ¦ Find which process is listening on port 5432. ¦ lsof -i :5432 ‖ sudo lsof -i :5432 ‖ lsof -i tcp:5432 ¦ list open files, -i for internet ¦ lsof -i :PORT shows the process holding a port. Great for "port already in use".
+bash ¦ w1d1 ¦ Install uv using its official install script (curl piped to sh). ¦ curl -LsSf https://astral.sh/uv/install.sh | sh ¦ curl -LsSf URL | sh ¦ -L follow redirects, -s silent, -S show errors, -f fail on HTTP errors; the script is piped into sh.
+bash ¦ w1d3 ¦ Print the contents of app.log. ¦ cat app.log ¦ concatenate ¦ cat prints files to stdout.
+bash ¦ w1d3 ¦ Show the first 20 lines of app.log. ¦ head -n 20 app.log ‖ head -20 app.log ¦ head with -n ¦ head shows the start of a file; default is 10 lines.
+bash ¦ w1d3 ¦ Watch app.log live as new lines arrive. ¦ tail -f app.log ¦ tail + follow ¦ tail -f keeps the file open and prints new lines. Ctrl+C to stop.
+bash ¦ w1d3 ¦ Print the lines in app.log that contain ERROR. ¦ grep ERROR app.log ‖ grep 'ERROR' app.log ¦ grep PATTERN FILE ¦ grep prints matching lines.
+bash ¦ w1d3 ¦ Count how many lines in app.log contain ERROR. ¦ grep -c ERROR app.log ‖ grep ERROR app.log | wc -l ‖ grep -c 'ERROR' app.log ¦ grep has a count flag ¦ -c counts matching lines instead of printing them.
+bash ¦ w1d3 ¦ Search app.log for "timeout", ignoring upper/lower case. ¦ grep -i timeout app.log ‖ grep -i 'timeout' app.log ¦ -i ¦ -i = case-insensitive.
+bash ¦ w1d3 ¦ Show lines of app.log that do NOT contain DEBUG. ¦ grep -v DEBUG app.log ¦ invert the match ¦ -v inverts: print non-matching lines.
+bash ¦ w1d3 ¦ Search every file under src/ for TODO, with line numbers. ¦ grep -rn TODO src ‖ grep -nr TODO src ‖ grep -rn TODO src/ ‖ grep -r -n TODO src ¦ recursive + numbers ¦ -r recurses into directories, -n prints line numbers.
+bash ¦ w1d3 ¦ Count the lines in data.csv. ¦ wc -l data.csv ‖ wc -l < data.csv ¦ word count, lines flag ¦ wc -l counts newline characters.
+bash ¦ w1d3 ¦ Write the word hello into a.txt, replacing whatever was there. ¦ echo hello > a.txt ‖ echo 'hello' > a.txt ¦ single > ¦ > truncates the file then writes.
+bash ¦ w1d3 ¦ Add the word world to the end of a.txt. ¦ echo world >> a.txt ‖ echo 'world' >> a.txt ¦ double > ¦ >> appends instead of overwriting.
+bash ¦ w1d3 ¦ Find all .conf files under / and hide the "Permission denied" errors. ¦ find / -name "*.conf" 2>/dev/null ‖ find / -name '*.conf' 2>/dev/null ¦ redirect file descriptor 2 ¦ 2> redirects stderr; /dev/null throws it away.
+bash ¦ w1d3 ¦ Make backup.sh executable. ¦ chmod +x backup.sh ‖ chmod u+x backup.sh ‖ chmod 755 backup.sh ¦ change mode, add x ¦ +x adds the execute bit so ./backup.sh can run.
+bash ¦ w1d3 ¦ Run backup.sh that sits in the current folder (it's executable). ¦ ./backup.sh ‖ bash backup.sh ¦ dot slash ¦ ./ is needed because the current folder is not in PATH.
+bash ¦ w1d3 ¦ Type the portable shebang line for a bash script. ¦ #!/usr/bin/env bash ‖ #!/bin/bash ¦ starts with #! ¦ /usr/bin/env finds bash wherever it lives in PATH.
+bash ¦ w1d3 ¦ Type bash "strict mode": exit on error, on unset variables, and on failures inside pipes. ¦ set -euo pipefail ‖ set -eu -o pipefail ‖ set -e -u -o pipefail ¦ set -e... -o pipefail ¦ Put it right under the shebang in every script.
+bash ¦ w1d3 ¦ Print the exit code of the previous command. ¦ echo $? ¦ dollar question mark ¦ 0 means success; anything else is failure.
+bash ¦ w1d3 ¦ Print names.txt sorted with duplicates removed. ¦ sort -u names.txt ‖ sort names.txt | uniq ¦ sort has a unique flag ¦ sort -u = sort | uniq.
+bash ¦ w1d3 ¦ Count how often each line appears in ips.txt, most frequent first. ¦ sort ips.txt | uniq -c | sort -rn ‖ sort ips.txt | uniq -c | sort -nr ¦ sort | uniq -c | sort -rn ¦ uniq only merges adjacent duplicates, so sort first; -c counts; sort -rn sorts numbers descending.
+bash ¦ w1d3 ¦ Print the 2nd column of the comma-separated file data.csv. ¦ cut -d, -f2 data.csv ‖ cut -d ',' -f2 data.csv ‖ cut -f2 -d, data.csv ‖ cut -d',' -f2 data.csv ‖ cut -d , -f 2 data.csv ¦ cut with delimiter and field ¦ -d sets the delimiter, -f picks fields (1-based).
+bash ¦ w1d3 ¦ Print only the first whitespace-separated field of each line of access.log, using awk. ¦ awk '{print $1}' access.log ¦ awk '{print $N}' ¦ awk splits each line into $1, $2...; $0 is the whole line.
+bash ¦ w1d3 ¦ Print file.txt with every "foo" replaced by "bar" (don't modify the file). ¦ sed 's/foo/bar/g' file.txt ‖ sed "s/foo/bar/g" file.txt ¦ sed substitute, global ¦ s/old/new/g replaces all matches on each line.
+bash ¦ w1d3 ¦ Replace foo with bar inside config.ini in place (GNU sed). ¦ sed -i 's/foo/bar/g' config.ini ‖ sed -i "s/foo/bar/g" config.ini ¦ -i ¦ -i edits the file in place. On macOS: sed -i '' 's/a/b/g' f.
+bash ¦ w1d3 ¦ Find every file ending in .log under /var/log. ¦ find /var/log -name "*.log" ‖ find /var/log -name '*.log' ‖ find /var/log -type f -name "*.log" ‖ find /var/log -type f -name '*.log' ‖ find /var/log -name '*.log' -type f ¦ find DIR -name PATTERN ¦ Quote the pattern so the shell doesn't expand * first.
+bash ¦ w1d3 ¦ Delete files in backups/ older than 7 days with find. ¦ find backups -mtime +7 -delete ‖ find backups -type f -mtime +7 -delete ‖ find backups/ -type f -mtime +7 -delete ‖ find backups/ -mtime +7 -delete ¦ -mtime +7 ¦ -mtime +7 = modified more than 7 days ago. Run without -delete first to preview!
+bash ¦ w1d3 ¦ Write a one-line loop that echoes the name of every .log file in this folder. ¦ for f in *.log; do echo "$f"; done ‖ for f in *.log; do echo $f; done ‖ for file in *.log; do echo "$file"; done ¦ for f in ...; do ...; done ¦ The glob *.log expands to the matching file names.
+bash ¦ w1d3 ¦ Write a one-line loop printing the numbers 1 to 5. ¦ for i in {1..5}; do echo $i; done ‖ for i in $(seq 1 5); do echo $i; done ‖ for i in {1..5}; do echo "$i"; done ‖ for i in $(seq 5); do echo $i; done ¦ brace expansion {1..5} ¦ {1..5} expands to 1 2 3 4 5 before the loop runs.
+bash ¦ w1d3 ¦ One line: if config.env exists as a file, print yes. ¦ if [ -f config.env ]; then echo yes; fi ‖ [ -f config.env ] && echo yes ‖ if [[ -f config.env ]]; then echo yes; fi ‖ test -f config.env && echo yes ¦ [ -f FILE ] ¦ -f tests "is a regular file"; -d tests directory; -e tests exists.
+bash ¦ w1d3 ¦ Store today's date as YYYY-MM-DD in a variable TODAY. ¦ TODAY=$(date +%F) ‖ TODAY=$(date +%Y-%m-%d) ‖ TODAY="$(date +%F)" ¦ $(command) ¦ $(...) captures a command's output. %F is shorthand for %Y-%m-%d.
+bash ¦ w1d3 ¦ Print $PORT, or 5432 if PORT is unset or empty. ¦ echo ${PORT:-5432} ‖ echo "${PORT:-5432}" ¦ ${VAR:-default} ¦ :- supplies a default without changing the variable.
+bash ¦ w1d7 ¦ Run pytest, and only if it passes run ./deploy.sh. ¦ pytest && ./deploy.sh ¦ AND operator ¦ && runs the right side only if the left exited 0.
+bash ¦ w1d7 ¦ Compress the folder data into data.tar.gz. ¦ tar -czf data.tar.gz data ‖ tar czf data.tar.gz data ‖ tar -czvf data.tar.gz data ‖ tar -czf data.tar.gz data/ ¦ tar c-z-f ¦ c = create, z = gzip, f = file name follows (keep f last).
+bash ¦ w1d7 ¦ Extract data.tar.gz into the current folder. ¦ tar -xzf data.tar.gz ‖ tar xzf data.tar.gz ‖ tar -xzvf data.tar.gz ‖ tar -xf data.tar.gz ¦ x for extract ¦ x = extract; modern tar detects gzip automatically.
+bash ¦ w1d7 ¦ Show free disk space in human-readable units. ¦ df -h ¦ disk free ¦ df = disk free; -h = human units (G, M).
+bash ¦ w1d7 ¦ Show the total size of each item in this folder, human-readable. ¦ du -sh * ‖ du -sh ./* ¦ disk usage, summary ¦ -s summarises each argument, -h human units.
+bash ¦ w2d5 ¦ Find running postgres processes with ps and grep. ¦ ps aux | grep postgres ‖ pgrep -a postgres ‖ pgrep postgres ¦ ps aux | grep ¦ ps aux lists every process; grep filters.
+bash ¦ w2d5 ¦ Politely stop the process with PID 4242. ¦ kill 4242 ¦ kill PID ¦ kill sends SIGTERM by default so the program can clean up.
+bash ¦ w2d5 ¦ Force-kill PID 4242 that ignores normal kill. ¦ kill -9 4242 ‖ kill -KILL 4242 ‖ kill -SIGKILL 4242 ¦ signal 9 ¦ SIGKILL can't be caught; use only as a last resort.
+bash ¦ w1d7 ¦ Copy the folder data (and everything in it) to backup. ¦ cp -r data backup ‖ cp -R data backup ‖ cp -a data backup ¦ recursive copy ¦ -r copies directories recursively.
+bash ¦ w1d3 ¦ Rename old.txt to new.txt. ¦ mv old.txt new.txt ¦ move ¦ mv renames when the destination is a new name in the same folder.
+bash ¦ w1d3 ¦ Delete the folder tmp and everything inside it. ¦ rm -rf tmp ‖ rm -r tmp ‖ rm -fr tmp ¦ remove recursive ¦ -r recurses, -f doesn't prompt. Double-check the path: there is no undo.
+bash ¦ w1d7 ¦ Open your crontab for editing. ¦ crontab -e ¦ crontab edit ¦ Each line: minute hour day-of-month month day-of-week command.
+bash ¦ w1d7 ¦ List your installed cron jobs. ¦ crontab -l ¦ crontab list ¦ -l prints the current crontab.
+bash ¦ w1d7 ¦ Cron schedule fields for "every day at 2:30 AM". ¦ 30 2 * * * ¦ minute first ¦ Order: minute(30) hour(2) day-of-month(*) month(*) day-of-week(*).
+bash ¦ w1d7 ¦ Cron schedule fields for "every 15 minutes". ¦ */15 * * * * ¦ step syntax ¦ */15 in the minute field means every 15th minute.
+bash ¦ w1d7 ¦ Cron schedule fields for "Mondays at 9:00 AM". ¦ 0 9 * * 1 ‖ 0 9 * * mon ¦ day-of-week is last, Monday = 1 ¦ Sunday is 0 (or 7).
+bash ¦ w1d7 ¦ Generate a modern SSH key pair. ¦ ssh-keygen -t ed25519 ‖ ssh-keygen -t ed25519 -C "hasan@nexis365.com.au" ¦ ssh-keygen -t TYPE ¦ ed25519 keys are short, fast and secure. Public key ends in .pub.
+bash ¦ w1d7 ¦ Log in to db.example.com as user hasan over SSH. ¦ ssh hasan@db.example.com ¦ user@host ¦ ssh user@host opens a remote shell.
+bash ¦ w1d7 ¦ Copy dump.sql to /tmp on db.example.com as hasan. ¦ scp dump.sql hasan@db.example.com:/tmp ‖ scp dump.sql hasan@db.example.com:/tmp/ ¦ secure copy ¦ scp SRC user@host:PATH copies over SSH.
+bash ¦ w1d1 ¦ Load the variables in .env into your current shell. ¦ source .env ‖ . .env ¦ source ¦ source runs a file in the current shell, so its variables stay set.
+bash ¦ w1d3 ¦ Count the words in essay.md. ¦ wc -w essay.md ¦ wc words flag ¦ -w words, -l lines, -c bytes.
+bash ¦ w1d1 ¦ Show only environment variables whose names contain PG. ¦ env | grep PG ‖ printenv | grep PG ¦ env piped to grep ¦ env prints every exported variable.
+bash ¦ w4d1 ¦ Download https://api.example.com/data and save it as data.json. ¦ curl -o data.json https://api.example.com/data ‖ curl https://api.example.com/data -o data.json ‖ curl https://api.example.com/data > data.json ¦ curl -o FILE URL ¦ -o writes the response body to a file.
+bash ¦ w4d5 ¦ Show only the HTTP response headers of https://cto-sprint.vercel.app. ¦ curl -I https://cto-sprint.vercel.app ¦ capital I ¦ -I sends a HEAD request; check status codes and cache headers fast.
+bash ¦ w1d3 ¦ Pretty-print data.json with jq. ¦ jq . data.json ‖ jq '.' data.json ‖ cat data.json | jq . ¦ jq with the identity filter ¦ . is the identity filter; jq '.items[0].name' digs in.
+bash ¦ w1d3 ¦ Show the 5 most recently modified files here. ¦ ls -t | head -5 ‖ ls -t | head -n 5 ‖ ls -lt | head -6 ¦ ls sorted by time ¦ -t sorts by modification time, newest first.
+bash ¦ w1d3 ¦ Print the last 50 lines of app.log. ¦ tail -n 50 app.log ‖ tail -50 app.log ¦ tail -n ¦ tail shows the end of a file.
+bash ¦ w1d3 ¦ Make a variable NAME equal to Hasan (no export). ¦ NAME=Hasan ‖ NAME="Hasan" ¦ no spaces around = ¦ NAME = Hasan would try to run a command called NAME.
+bash ¦ w1d3 ¦ Print "Hello, Hasan" using the NAME variable inside double quotes. ¦ echo "Hello, $NAME" ‖ echo "Hello, ${NAME}" ¦ double quotes expand variables ¦ Single quotes would print $NAME literally.
+git ¦ w1d7 ¦ Turn the current folder into a git repository. ¦ git init ¦ initialise ¦ Creates the hidden .git folder.
+git ¦ w1d7 ¦ See which files are changed, staged or untracked. ¦ git status ‖ git status -s ¦ status ¦ Run it constantly; it tells you what to do next.
+git ¦ w1d7 ¦ Stage every change in the repo. ¦ git add . ‖ git add -A ‖ git add --all ¦ add dot ¦ Staging chooses what goes into the next commit.
+git ¦ w1d7 ¦ Commit staged changes with the message "feat: shifts cli". ¦ git commit -m "feat: shifts cli" ‖ git commit -m 'feat: shifts cli' ¦ commit -m ¦ Conventional commits: feat:, fix:, docs:, chore:.
+git ¦ w1d7 ¦ Push main to origin for the first time and set it as upstream. ¦ git push -u origin main ‖ git push --set-upstream origin main ¦ push -u ¦ -u remembers the upstream so later you can just type git push.
+git ¦ w1d7 ¦ Download https://github.com/genesisprime01/cto-sprint to your machine. ¦ git clone https://github.com/genesisprime01/cto-sprint ‖ git clone https://github.com/genesisprime01/cto-sprint.git ‖ gh repo clone genesisprime01/cto-sprint ¦ clone ¦ clone copies the full history and sets origin.
+git ¦ w1d7 ¦ Create and switch to a new branch feature/cli. ¦ git switch -c feature/cli ‖ git checkout -b feature/cli ¦ switch -c ¦ -c creates the branch. checkout -b is the older form.
+git ¦ w1d7 ¦ Switch back to the main branch. ¦ git switch main ‖ git checkout main ¦ switch ¦ Commit or stash first if you have changes.
+git ¦ w1d7 ¦ While on main, merge feature/cli into it. ¦ git merge feature/cli ¦ merge ¦ Merges the named branch into the current one.
+git ¦ w1d7 ¦ Show the history compactly, one commit per line. ¦ git log --oneline ‖ git log --oneline --graph ¦ log --oneline ¦ Add --graph --all for a branch picture.
+git ¦ w1d7 ¦ See unstaged changes line by line. ¦ git diff ¦ diff ¦ git diff --staged shows what is already staged.
+git ¦ w1d7 ¦ See what is staged for the next commit. ¦ git diff --staged ‖ git diff --cached ¦ diff + staged ¦ --cached is the older synonym.
+git ¦ w1d7 ¦ Fetch and merge the latest changes from the remote. ¦ git pull ‖ git pull origin main ¦ pull ¦ pull = fetch + merge (or rebase if configured).
+git ¦ w1d7 ¦ Temporarily shelve your uncommitted changes. ¦ git stash ‖ git stash push ¦ stash ¦ Bring them back with git stash pop.
+git ¦ w1d7 ¦ Bring back the most recent stash. ¦ git stash pop ¦ stash ... ¦ pop applies and removes the stash.
+git ¦ w1d7 ¦ Throw away your unstaged edits to app.py. ¦ git restore app.py ‖ git checkout -- app.py ¦ restore ¦ Irreversible for those edits.
+git ¦ w1d7 ¦ Unstage app.py but keep the edits. ¦ git restore --staged app.py ‖ git reset app.py ‖ git reset HEAD app.py ¦ restore --staged ¦ Moves it out of the staging area only.
+git ¦ w1d7 ¦ Fix the message of your last (unpushed) commit to "fix: typo". ¦ git commit --amend -m "fix: typo" ‖ git commit --amend -m 'fix: typo' ¦ --amend ¦ Rewrites the last commit; don't amend what's already pushed.
+git ¦ w4d7 ¦ Tag the current commit as v1.0. ¦ git tag v1.0 ‖ git tag -a v1.0 -m "v1.0" ‖ git tag -a v1.0 -m 'v1.0' ¦ tag ¦ -a makes an annotated tag with a message.
+git ¦ w4d7 ¦ Push your tags to GitHub. ¦ git push --tags ‖ git push origin --tags ‖ git push origin v1.0 ¦ push --tags ¦ Tags aren't pushed by default.
+git ¦ w1d7 ¦ Connect the repo to https://github.com/genesisprime01/shifts-cli.git as origin. ¦ git remote add origin https://github.com/genesisprime01/shifts-cli.git ¦ remote add NAME URL ¦ origin is the conventional name for your main remote.
+git ¦ w1d7 ¦ List remotes with their URLs. ¦ git remote -v ¦ remote verbose ¦ Shows fetch and push URLs.
+git ¦ w1d7 ¦ Open a pull request from the terminal with the GitHub CLI. ¦ gh pr create ‖ gh pr create --fill ¦ gh pr ... ¦ --fill uses your commit messages for title/body.
+git ¦ w1d7 ¦ Safely undo the last commit by adding a new commit that reverses it. ¦ git revert HEAD ¦ revert ¦ revert is safe on shared branches; reset rewrites history.
+git ¦ w1d7 ¦ See who last changed each line of app.py. ¦ git blame app.py ¦ blame ¦ Useful when hunting when a bug was introduced.
+git ¦ w1d7 ¦ List local branches. ¦ git branch ‖ git branch -a ‖ git branch --list ¦ branch ¦ -a includes remote branches.
+docker ¦ w1d1 ¦ Start Postgres 17 in the background named pg, password dev, port 5432 published. ¦ docker run --name pg -e POSTGRES_PASSWORD=dev -p 5432:5432 -d postgres:17 ‖ docker run -d --name pg -e POSTGRES_PASSWORD=dev -p 5432:5432 postgres:17 ‖ docker run --name pg -d -e POSTGRES_PASSWORD=dev -p 5432:5432 postgres:17 ¦ docker run --name -e -p -d IMAGE ¦ -d detaches, -e sets env vars, -p maps host:container ports. The image goes last.
+docker ¦ w1d1 ¦ List running containers. ¦ docker ps ‖ docker container ls ¦ like the process list ¦ Add -a to include stopped ones.
+docker ¦ w1d1 ¦ List ALL containers, including stopped ones. ¦ docker ps -a ‖ docker container ls -a ¦ ps + all ¦ Stopped containers still take disk space until removed.
+docker ¦ w1d1 ¦ Follow the logs of container pg. ¦ docker logs -f pg ¦ logs + follow ¦ First stop when a container won't start.
+docker ¦ w1d1 ¦ Open psql as user postgres inside the running container pg. ¦ docker exec -it pg psql -U postgres ¦ exec -it CONTAINER CMD ¦ -i keeps stdin open, -t gives a terminal.
+docker ¦ w1d1 ¦ Open a bash shell inside container pg. ¦ docker exec -it pg bash ‖ docker exec -it pg sh ‖ docker exec -it pg /bin/bash ¦ exec -it + shell ¦ Look around inside the container's filesystem.
+docker ¦ w1d1 ¦ Stop the container pg. ¦ docker stop pg ¦ stop ¦ Sends SIGTERM, then SIGKILL after a timeout.
+docker ¦ w1d1 ¦ Start the stopped container pg again. ¦ docker start pg ¦ start ¦ Data in the container survives stop/start (not rm).
+docker ¦ w1d1 ¦ Delete the container pg, even if running. ¦ docker rm -f pg ¦ rm with force ¦ Without a volume, the database data goes with it.
+docker ¦ w1d1 ¦ Download the postgres:17 image without running it. ¦ docker pull postgres:17 ¦ pull ¦ Images are cached locally after the first pull.
+docker ¦ w1d1 ¦ List local images. ¦ docker images ‖ docker image ls ¦ images ¦ Shows repository, tag, size.
+docker ¦ w2d7 ¦ Build an image tagged cto-api from the Dockerfile in this folder. ¦ docker build -t cto-api . ¦ build -t NAME . ¦ The trailing . is the build context.
+docker ¦ w2d7 ¦ Run cto-api in the background, mapping port 8000 to 8000. ¦ docker run -d -p 8000:8000 cto-api ‖ docker run -p 8000:8000 -d cto-api ¦ run -d -p ¦ host:container.
+docker ¦ w2d7 ¦ Start every service in compose.yaml in the background. ¦ docker compose up -d ¦ compose up detached ¦ One command = whole stack.
+docker ¦ w2d7 ¦ Stop and remove the compose stack (keep volumes). ¦ docker compose down ¦ compose down ¦ Volumes survive unless you add -v.
+docker ¦ w2d7 ¦ Stop the compose stack AND delete its volumes (fresh database). ¦ docker compose down -v ¦ down + volumes ¦ Destroys data. Great for clean test runs.
+docker ¦ w2d7 ¦ Follow the logs of every compose service. ¦ docker compose logs -f ¦ compose logs follow ¦ Add a service name to filter.
+docker ¦ w2d7 ¦ Show the status of compose services. ¦ docker compose ps ¦ compose ps ¦ Shows health status if healthchecks are defined.
+docker ¦ w2d7 ¦ List Docker volumes. ¦ docker volume ls ¦ volume ls ¦ Named volumes hold your Postgres data.
+docker ¦ w2d7 ¦ Show live CPU/memory usage of containers. ¦ docker stats ¦ stats ¦ Watch Postgres memory during your load test.
+docker ¦ w2d7 ¦ Remove unused containers, networks and dangling images. ¦ docker system prune ‖ docker system prune -f ¦ system prune ¦ Frees disk space. Add -a to remove unused images too.
+docker ¦ w2d7 ¦ Scale the replica service to 2 containers with compose. ¦ docker compose up -d --scale replica=2 ¦ --scale SERVICE=N ¦ Each instance gets its own container.
+psql ¦ w1d1 ¦ Connect with psql to localhost as postgres to database postgres. ¦ psql -h localhost -U postgres -d postgres ‖ psql -h localhost -U postgres postgres ‖ psql postgresql://postgres@localhost/postgres ¦ -h -U -d ¦ Or one URL: psql postgresql://user:pass@host:5432/db.
+psql ¦ w1d1 ¦ (inside psql) List all databases. ¦ \l ‖ \list ¦ backslash L ¦ psql meta-commands start with a backslash.
+psql ¦ w1d2 ¦ (inside psql) Connect to the database tlc. ¦ \c tlc ‖ \connect tlc ¦ \c ¦ \c switches database without leaving psql.
+psql ¦ w1d2 ¦ (inside psql) List tables. ¦ \dt ¦ describe tables ¦ \dt+ adds sizes.
+psql ¦ w1d2 ¦ (inside psql) Describe the columns, indexes and constraints of shifts. ¦ \d shifts ¦ \d NAME ¦ \d+ shows more (storage, description).
+psql ¦ w1d5 ¦ (inside psql) List indexes. ¦ \di ¦ describe indexes ¦ \di+ shows index sizes.
+psql ¦ w3d1 ¦ (inside psql) List schemas. ¦ \dn ¦ describe namespaces ¦ Schemas are namespaces.
+psql ¦ w3d1 ¦ (inside psql) List roles and their attributes. ¦ \du ¦ describe users ¦ Shows Superuser, Create role, Bypass RLS...
+psql ¦ w3d1 ¦ (inside psql) Show privileges on tables. ¦ \dp ‖ \z ¦ describe privileges ¦ Access privileges column: r=SELECT, a=INSERT, w=UPDATE, d=DELETE.
+psql ¦ w1d6 ¦ (inside psql) List installed extensions. ¦ \dx ¦ describe extensions ¦ Check pg_stat_statements, vector, pgcrypto are there.
+psql ¦ w1d6 ¦ (inside psql) List functions. ¦ \df ¦ describe functions ¦ \df auth.* lists Supabase auth functions.
+psql ¦ w1d5 ¦ (inside psql) Toggle expanded (vertical) output for wide rows. ¦ \x ‖ \x auto ¦ x for expanded ¦ \x auto switches only when rows are too wide.
+psql ¦ w1d5 ¦ (inside psql) Show how long each query takes. ¦ \timing ‖ \timing on ¦ timing ¦ Quick and dirty benchmarking.
+psql ¦ w1d1 ¦ (inside psql) Quit. ¦ \q ¦ quit ¦ Ctrl+D also works.
+psql ¦ w1d2 ¦ (inside psql) Run the SQL file schema.sql. ¦ \i schema.sql ¦ include ¦ Keeps your schema in version control.
+psql ¦ w1d1 ¦ (inside psql) Show help for meta-commands. ¦ \? ¦ question mark ¦ \h SELECT shows SQL syntax help.
+psql ¦ w3d2 ¦ (inside psql) Show which host, port, user and database you're connected to. ¦ \conninfo ¦ connection info ¦ Also shows SSL status.
+psql ¦ w1d3 ¦ (inside psql) Export table shifts to shifts.csv with a header row, client-side. ¦ \copy shifts to 'shifts.csv' csv header ‖ \copy shifts to shifts.csv csv header ‖ \copy shifts to 'shifts.csv' with csv header ¦ \copy TABLE to FILE csv header ¦ \copy runs on your machine; COPY runs on the server.
+psql ¦ w2d2 ¦ (inside psql) Re-run the last query every 2 seconds. ¦ \watch 2 ¦ watch ¦ Perfect for watching replication lag live.
+psql ¦ w1d1 ¦ Run "select 1" via psql without opening an interactive session. ¦ psql -c "select 1" ‖ psql -c 'select 1' ¦ -c ¦ -c runs one command and exits; good in scripts.
+psql ¦ w2d7 ¦ Back up the database tlc in custom format to tlc.dump. ¦ pg_dump -Fc tlc > tlc.dump ‖ pg_dump -Fc -f tlc.dump tlc ‖ pg_dump -Fc tlc -f tlc.dump ¦ pg_dump -Fc ¦ -Fc = custom compressed format, restorable selectively with pg_restore.
+psql ¦ w2d7 ¦ Restore tlc.dump into the database tlc. ¦ pg_restore -d tlc tlc.dump ¦ pg_restore -d DB FILE ¦ Add --clean to drop objects first.
+psql ¦ w2d7 ¦ Check whether Postgres on localhost is accepting connections. ¦ pg_isready ‖ pg_isready -h localhost ¦ is ready? ¦ Exit code 0 when ready: perfect for Docker healthchecks and wait loops.
+psql ¦ w2d5 ¦ Initialise pgbench tables at scale 50 in database tlc. ¦ pgbench -i -s 50 tlc ¦ -i -s ¦ -i initialises, -s sets scale (×100k rows in pgbench_accounts).
+psql ¦ w2d5 ¦ Run pgbench on tlc with 50 clients, 4 threads, for 60 seconds. ¦ pgbench -c 50 -j 4 -T 60 tlc ¦ -c clients -j threads -T seconds ¦ Read tps and latency average from the output.
+sql ¦ w1d2 ¦ Get every column of every row in workers. ¦ select * from workers ¦ SELECT * ¦ Fine for exploring; name columns in real code.
+sql ¦ w1d2 ¦ Get just the names from workers, alphabetically. ¦ select name from workers order by name ‖ select name from workers order by name asc ¦ ORDER BY ¦ ASC is the default.
+sql ¦ w1d2 ¦ Count the rows in shifts. ¦ select count(*) from shifts ¦ count(*) ¦ count(col) skips NULLs; count(*) counts rows.
+sql ¦ w1d2 ¦ Get the shifts longer than 6 hours. ¦ select * from shifts where hours > 6 ¦ WHERE ¦ WHERE filters rows before grouping.
+sql ¦ w1d2 ¦ Get the 5 longest shifts. ¦ select * from shifts order by hours desc limit 5 ¦ ORDER BY ... DESC LIMIT ¦ Without ORDER BY, LIMIT returns arbitrary rows.
+sql ¦ w1d2 ¦ Add a worker named Aisha (id is serial). ¦ insert into workers(name) values ('Aisha') ‖ insert into workers (name) values ('Aisha') ¦ INSERT INTO t(col) VALUES (...) ¦ Strings use single quotes in SQL.
+sql ¦ w1d2 ¦ Set hours to 8 for the shift with id 3. ¦ update shifts set hours = 8 where id = 3 ¦ UPDATE ... SET ... WHERE ¦ Forget WHERE and you update every row.
+sql ¦ w1d2 ¦ Delete the shift with id 3. ¦ delete from shifts where id = 3 ¦ DELETE FROM ... WHERE ¦ Run it inside BEGIN; first if you're nervous.
+sql ¦ w1d2 ¦ List worker names with their shift hours (shifts s JOIN workers w on worker_id). ¦ select w.name, s.hours from shifts s join workers w on w.id = s.worker_id ‖ select w.name, s.hours from shifts s join workers w on s.worker_id = w.id ‖ select w.name, s.hours from workers w join shifts s on s.worker_id = w.id ‖ select w.name, s.hours from workers w join shifts s on w.id = s.worker_id ¦ JOIN ... ON ¦ Aliases (s, w) keep joins readable.
+sql ¦ w1d2 ¦ List every worker and their shift ids, including workers with no shifts (workers w, shifts s). ¦ select w.name, s.id from workers w left join shifts s on s.worker_id = w.id ‖ select w.name, s.id from workers w left join shifts s on w.id = s.worker_id ¦ LEFT JOIN ¦ Workers with no shifts get NULL for s.id.
+sql ¦ w1d4 ¦ Total hours per worker_id. ¦ select worker_id, sum(hours) from shifts group by worker_id ¦ GROUP BY + sum ¦ Every non-aggregated column must be in GROUP BY.
+sql ¦ w1d4 ¦ worker_ids whose total hours exceed 38. ¦ select worker_id from shifts group by worker_id having sum(hours) > 38 ‖ select worker_id, sum(hours) from shifts group by worker_id having sum(hours) > 38 ¦ HAVING ¦ HAVING filters groups after aggregation.
+sql ¦ w1d4 ¦ List each region once from participants. ¦ select distinct region from participants ¦ DISTINCT ¦ DISTINCT removes duplicate rows from the result.
+sql ¦ w1d2 ¦ Find shifts that haven't ended (ended_at missing). ¦ select * from shifts where ended_at is null ¦ IS NULL ¦ = NULL never matches; use IS NULL.
+sql ¦ w1d2 ¦ Abort the current transaction and undo its changes. ¦ rollback ¦ opposite of commit ¦ Everything since BEGIN is discarded.
+sql ¦ w1d2 ¦ Add a text column phone to workers. ¦ alter table workers add column phone text ‖ alter table workers add phone text ¦ ALTER TABLE ... ADD COLUMN ¦ Adding a nullable column is instant in Postgres.
+sql ¦ w1d4 ¦ Rank shifts by hours (highest = 1) alongside each row, using a window function. ¦ select *, rank() over (order by hours desc) from shifts ‖ select id, hours, rank() over (order by hours desc) from shifts ¦ rank() OVER (...) ¦ Window functions keep every row while computing across rows.
+sql ¦ w1d4 ¦ Use a CTE named t holding shifts over 6h, then count it. ¦ with t as (select * from shifts where hours > 6) select count(*) from t ¦ WITH t AS (...) ¦ CTEs make complex queries readable.
+sql ¦ w1d3 ¦ Insert worker id 1 named Aisha, or update the name if id 1 exists. ¦ insert into workers(id, name) values (1, 'Aisha') on conflict (id) do update set name = excluded.name ‖ insert into workers (id, name) values (1, 'Aisha') on conflict (id) do update set name = excluded.name ¦ ON CONFLICT ... DO UPDATE ¦ EXCLUDED holds the row you tried to insert.
+sql ¦ w1d3 ¦ Get the name field as text from jsonb column data in events. ¦ select data->>'name' from events ¦ ->> ¦ -> returns jsonb, ->> returns text.
+sql ¦ w1d5 ¦ Create an index on shifts(worker_id). ¦ create index on shifts(worker_id) ‖ create index on shifts (worker_id) ‖ create index shifts_worker_id_idx on shifts(worker_id) ‖ create index shifts_worker_id_idx on shifts (worker_id) ¦ CREATE INDEX ON t(col) ¦ Postgres auto-names the index if you omit a name.
+sql ¦ w1d5 ¦ Create a composite index on shifts(worker_id, starts_at). ¦ create index on shifts(worker_id, starts_at) ‖ create index on shifts (worker_id, starts_at) ¦ two columns, order matters ¦ Serves WHERE worker_id = ? AND starts_at > ?, and worker_id alone.
+sql ¦ w1d5 ¦ Index only open shifts: index on shifts(id) where status = 'open'. ¦ create index on shifts(id) where status = 'open' ‖ create index on shifts (id) where status = 'open' ¦ partial index = index + WHERE ¦ Smaller, faster index for hot subsets.
+sql ¦ w1d5 ¦ Run and time the query "select * from shifts where worker_id = 1" with real stats. ¦ explain analyze select * from shifts where worker_id = 1 ‖ explain (analyze) select * from shifts where worker_id = 1 ¦ EXPLAIN ANALYZE ¦ ANALYZE actually runs the query; careful with UPDATE/DELETE.
+sql ¦ w1d5 ¦ Same, but also show buffer (cache) hits: explain with analyze and buffers for "select * from shifts". ¦ explain (analyze, buffers) select * from shifts ¦ EXPLAIN (ANALYZE, BUFFERS) ¦ shared hit = from cache, read = from disk.
+sql ¦ w1d5 ¦ Refresh the planner statistics for shifts. ¦ analyze shifts ¦ the word for statistics ¦ Stale stats = bad plans. Autovacuum normally does this.
+sql ¦ w2d1 ¦ Clean dead tuples from shifts, printing details. ¦ vacuum (verbose) shifts ‖ vacuum verbose shifts ¦ VACUUM ¦ VERBOSE reports how many dead tuples were removed.
+sql ¦ w1d6 ¦ Create a GIN index on the jsonb column data of events. ¦ create index on events using gin(data) ‖ create index on events using gin (data) ¦ USING gin ¦ GIN speeds up @> containment and key-exists queries.
+sql ¦ w1d6 ¦ Create a BRIN index on readings(created_at). ¦ create index on readings using brin(created_at) ‖ create index on readings using brin (created_at) ¦ USING brin ¦ BRIN is tiny; works when rows are physically ordered by time.
+sql ¦ w1d6 ¦ Build an index on shifts(worker_id) without blocking writes. ¦ create index concurrently on shifts(worker_id) ‖ create index concurrently on shifts (worker_id) ¦ CONCURRENTLY ¦ Slower but production-safe; can't run inside a transaction.
+sql ¦ w1d6 ¦ Show the 5 queries with the highest total execution time (query, total_exec_time). ¦ select query, total_exec_time from pg_stat_statements order by total_exec_time desc limit 5 ¦ pg_stat_statements ORDER BY total_exec_time ¦ Fix the top of this list first.
+sql ¦ w1d6 ¦ Install the pg_stat_statements extension in this database. ¦ create extension pg_stat_statements ‖ create extension if not exists pg_stat_statements ¦ CREATE EXTENSION ¦ It also needs shared_preload_libraries (Supabase has it on).
+sql ¦ w2d1 ¦ Show each table's name and dead tuple count. ¦ select relname, n_dead_tup from pg_stat_user_tables ¦ pg_stat_user_tables ¦ High n_dead_tup = autovacuum is behind.
+sql ¦ w2d1 ¦ Show the current WAL position on the primary. ¦ select pg_current_wal_lsn() ¦ current wal lsn ¦ Compare with replay_lsn on the replica to measure lag in bytes.
+sql ¦ w2d1 ¦ Check whether this server is a replica (in recovery). ¦ select pg_is_in_recovery() ¦ is in recovery ¦ true = standby, false = primary.
+sql ¦ w2d1 ¦ On the primary, show all replication connections. ¦ select * from pg_stat_replication ¦ pg_stat_replication ¦ One row per connected standby.
+sql ¦ w2d2 ¦ Show each replica's address and replay lag. ¦ select client_addr, replay_lag from pg_stat_replication ¦ replay_lag column ¦ replay_lag is time-based; compare LSNs for byte lag.
+sql ¦ w2d2 ¦ Promote this standby to primary. ¦ select pg_promote() ¦ promote ¦ Failover in one function call (Postgres 12+).
+sql ¦ w2d1 ¦ Create a physical replication slot named replica1. ¦ select pg_create_physical_replication_slot('replica1') ¦ pg_create_physical_replication_slot ¦ Slots keep WAL for the replica; drop unused slots or disk fills up.
+sql ¦ w2d3 ¦ Show the max_connections setting. ¦ show max_connections ¦ SHOW ¦ Default 100. Pool instead of raising it.
+sql ¦ w2d3 ¦ Count current connections. ¦ select count(*) from pg_stat_activity ¦ pg_stat_activity ¦ One row per backend.
+sql ¦ w2d3 ¦ Kill every idle connection (pg_stat_activity, state 'idle'). ¦ select pg_terminate_backend(pid) from pg_stat_activity where state = 'idle' ¦ pg_terminate_backend(pid) ¦ Careful in production: those are real clients.
+sql ¦ w2d4 ¦ Create table shifts(id bigint, starts_at timestamptz) partitioned by range on starts_at. ¦ create table shifts (id bigint, starts_at timestamptz) partition by range (starts_at) ‖ create table shifts(id bigint, starts_at timestamptz) partition by range(starts_at) ¦ PARTITION BY RANGE (col) ¦ The parent holds no rows itself.
+sql ¦ w2d4 ¦ Create the November 2026 partition shifts_2026_11. ¦ create table shifts_2026_11 partition of shifts for values from ('2026-11-01') to ('2026-12-01') ¦ PARTITION OF ... FOR VALUES FROM ... TO ¦ Upper bound is exclusive.
+sql ¦ w2d4 ¦ Detach the October partition shifts_2026_10 from shifts. ¦ alter table shifts detach partition shifts_2026_10 ¦ DETACH PARTITION ¦ Instant archiving: detach, dump, drop.
+sql ¦ w2d6 ¦ Publish the shifts table for logical replication as shifts_pub. ¦ create publication shifts_pub for table shifts ¦ CREATE PUBLICATION ¦ Run on the source; subscribers pull from it.
+sql ¦ w2d6 ¦ Subscribe to shifts_pub from host=primary dbname=tlc as shifts_sub. ¦ create subscription shifts_sub connection 'host=primary dbname=tlc' publication shifts_pub ¦ CREATE SUBSCRIPTION ... CONNECTION ... PUBLICATION ¦ The table must already exist on the subscriber.
+sql ¦ w2d5 ¦ Lock the shift with id 1 so no one else can change it until you commit. ¦ select * from shifts where id = 1 for update ¦ FOR UPDATE ¦ Row lock; others trying to update it wait.
+sql ¦ w2d5 ¦ Make the current transaction serializable. ¦ set transaction isolation level serializable ¦ SET TRANSACTION ISOLATION LEVEL ¦ Strongest level; be ready to retry serialization failures.
+sql ¦ w3d1 ¦ Create a login role app with password 'secret'. ¦ create role app login password 'secret' ‖ create role app with login password 'secret' ‖ create user app password 'secret' ‖ create user app with password 'secret' ¦ CREATE ROLE ... LOGIN PASSWORD ¦ CREATE USER = CREATE ROLE with LOGIN.
+sql ¦ w3d1 ¦ Create a group role readonly that cannot log in. ¦ create role readonly nologin ‖ create role readonly ‖ create role readonly with nologin ¦ NOLOGIN ¦ Group roles hold privileges; users inherit them via membership.
+sql ¦ w3d1 ¦ Let readonly SELECT every existing table in schema public. ¦ grant select on all tables in schema public to readonly ¦ GRANT ... ON ALL TABLES IN SCHEMA ¦ Only covers existing tables; see ALTER DEFAULT PRIVILEGES.
+sql ¦ w3d1 ¦ Make app a member of readonly. ¦ grant readonly to app ¦ GRANT role TO role ¦ app now inherits readonly's privileges.
+sql ¦ w3d1 ¦ Stop everyone from creating objects in schema public. ¦ revoke create on schema public from public ¦ REVOKE CREATE ... FROM PUBLIC ¦ Default since Postgres 15, but older DBs need it.
+sql ¦ w3d1 ¦ Remove all privileges on shifts from everyone. ¦ revoke all on shifts from public ¦ REVOKE ALL ¦ Start from zero, then grant what's needed.
+sql ¦ w3d1 ¦ Make future tables in public automatically SELECTable by readonly. ¦ alter default privileges in schema public grant select on tables to readonly ¦ ALTER DEFAULT PRIVILEGES ¦ Applies to tables created later by the current role.
+sql ¦ w3d1 ¦ Act as role app for the rest of the session. ¦ set role app ¦ SET ROLE ¦ Great for testing what app can actually see.
+sql ¦ w3d1 ¦ Go back to your original role. ¦ reset role ¦ RESET ¦ Undoes SET ROLE.
+sql ¦ w3d1 ¦ Show the current role name. ¦ select current_user ¦ current_user ¦ session_user stays the login role even after SET ROLE.
+sql ¦ w3d2 ¦ Show how new passwords are hashed. ¦ show password_encryption ¦ password_encryption ¦ Should be scram-sha-256.
+sql ¦ w3d2 ¦ Make SCRAM the password hashing method server-wide. ¦ alter system set password_encryption = 'scram-sha-256' ‖ alter system set password_encryption = scram-sha-256 ¦ ALTER SYSTEM SET ¦ Then reload config and reset passwords so they're re-hashed.
+sql ¦ w3d2 ¦ Reload the server config without restarting. ¦ select pg_reload_conf() ¦ reload conf ¦ Needed after editing pg_hba.conf or ALTER SYSTEM.
+sql ¦ w3d2 ¦ View the parsed pg_hba.conf rules from SQL. ¦ select * from pg_hba_file_rules ¦ pg_hba_file_rules ¦ The error column shows broken lines before you reload.
+sql ¦ w3d2 ¦ Check if your own connection uses SSL (pg_stat_ssl for your backend pid). ¦ select ssl from pg_stat_ssl where pid = pg_backend_pid() ‖ select * from pg_stat_ssl where pid = pg_backend_pid() ¦ pg_stat_ssl + pg_backend_pid() ¦ Also shows TLS version and cipher.
+sql ¦ w3d3 ¦ Turn on row level security for shifts. ¦ alter table shifts enable row level security ¦ ENABLE ROW LEVEL SECURITY ¦ With RLS on and no policies, non-owners see zero rows.
+sql ¦ w3d3 ¦ Make RLS apply to the table owner of shifts too. ¦ alter table shifts force row level security ¦ FORCE ¦ Otherwise owners bypass policies silently.
+sql ¦ w3d3 ¦ Policy own_shifts: users SELECT only shifts where worker_id = auth.uid(). ¦ create policy own_shifts on shifts for select using (worker_id = auth.uid()) ¦ CREATE POLICY name ON t FOR SELECT USING (...) ¦ USING filters which existing rows are visible.
+sql ¦ w3d3 ¦ Policy insert_own: users may only INSERT shifts where worker_id = auth.uid(). ¦ create policy insert_own on shifts for insert with check (worker_id = auth.uid()) ¦ FOR INSERT WITH CHECK ¦ WITH CHECK validates new rows.
+sql ¦ w3d3 ¦ Set the session setting app.tenant_id to 42 (for RLS). ¦ set app.tenant_id = '42' ‖ set app.tenant_id = 42 ‖ select set_config('app.tenant_id', '42', false) ¦ SET custom.setting ¦ Policies read it with current_setting('app.tenant_id').
+sql ¦ w3d3 ¦ Read the session setting app.tenant_id. ¦ select current_setting('app.tenant_id') ¦ current_setting ¦ Add , true to return NULL instead of erroring when unset.
+sql ¦ w3d3 ¦ List every RLS policy in the database. ¦ select * from pg_policies ¦ pg_policies view ¦ Shows table, roles, command, qual (USING) and with_check.
+sql ¦ w3d4 ¦ In Supabase SQL, return the full JWT of the current request. ¦ select auth.jwt() ¦ auth.jwt() ¦ auth.jwt() ->> 'role' gives the role claim.
+sql ¦ w3d5 ¦ Enable the pgcrypto extension. ¦ create extension pgcrypto ‖ create extension if not exists pgcrypto ¦ CREATE EXTENSION ¦ Supabase installs it in the extensions schema.
+sql ¦ w3d5 ¦ Hash the password 'hunter2' with bcrypt using pgcrypto. ¦ select crypt('hunter2', gen_salt('bf')) ¦ crypt + gen_salt('bf') ¦ bf = Blowfish/bcrypt, slow by design.
+sql ¦ w3d5 ¦ Get the SHA-256 digest of 'text' as hex. ¦ select encode(digest('text', 'sha256'), 'hex') ¦ encode(digest(...), 'hex') ¦ digest returns bytea; encode makes it readable.
+sql ¦ w3d5 ¦ Encrypt 'note' symmetrically with key 'k'. ¦ select pgp_sym_encrypt('note', 'k') ¦ pgp_sym_encrypt ¦ Decrypt with pgp_sym_decrypt(col, 'k'). Keep the key out of the DB.
+sql ¦ w4d2 ¦ Enable pgvector. ¦ create extension vector ‖ create extension if not exists vector ¦ the extension is named vector ¦ Not "pgvector" in SQL.
+sql ¦ w4d2 ¦ Create chunks(id bigserial primary key, body text, embedding vector(768)). ¦ create table chunks (id bigserial primary key, body text, embedding vector(768)) ‖ create table chunks(id bigserial primary key, body text, embedding vector(768)) ¦ vector(N) ¦ N must match your embedding model's dimensions.
+sql ¦ w4d2 ¦ Get the ids of the 5 chunks nearest to $1 by cosine distance. ¦ select id from chunks order by embedding <=> $1 limit 5 ¦ ORDER BY embedding <=> $1 ¦ <=> cosine, <-> L2, <#> negative inner product.
+sql ¦ w4d2 ¦ Create an HNSW index for cosine distance on chunks.embedding. ¦ create index on chunks using hnsw (embedding vector_cosine_ops) ‖ create index on chunks using hnsw(embedding vector_cosine_ops) ¦ USING hnsw (col vector_cosine_ops) ¦ The opclass must match the operator you query with.
+sql ¦ w4d2 ¦ Create an IVFFlat cosine index with 100 lists on chunks.embedding. ¦ create index on chunks using ivfflat (embedding vector_cosine_ops) with (lists = 100) ¦ WITH (lists = 100) ¦ Build IVFFlat after loading data; lists ≈ rows/1000.
+sql ¦ w4d2 ¦ Raise HNSW search breadth to 100 for better recall. ¦ set hnsw.ef_search = 100 ¦ hnsw.ef_search ¦ Higher = better recall, slower queries. Default 40.
+sql ¦ w4d2 ¦ Make IVFFlat search 10 lists per query. ¦ set ivfflat.probes = 10 ¦ ivfflat.probes ¦ More probes = better recall. Default 1.
+sql ¦ w4d2 ¦ Which pgvector operator is Euclidean (L2) distance? Type just the operator. ¦ <-> ¦ arrow with a dash ¦ <-> L2, <=> cosine, <#> negative inner product.
+sql ¦ w4d3 ¦ Find docs whose body matches plainto_tsquery('english', 'incident report'). ¦ select * from docs where to_tsvector('english', body) @@ plainto_tsquery('english', 'incident report') ¦ to_tsvector(...) @@ tsquery ¦ @@ is the full-text match operator.
+sql ¦ w4d3 ¦ Create a GIN index on to_tsvector('english', body) for docs. ¦ create index on docs using gin (to_tsvector('english', body)) ‖ create index on docs using gin(to_tsvector('english', body)) ¦ expression index with gin ¦ The query must use the same expression to hit the index.
+python ¦ w1d1 ¦ Run app.py with Python 3. ¦ python3 app.py ‖ python app.py ‖ uv run app.py ¦ python3 FILE ¦ uv run also makes sure the project's dependencies are installed.
+python ¦ w1d1 ¦ Check the Python version. ¦ python3 --version ‖ python --version ‖ python3 -V ¦ --version ¦ Aim for 3.12+.
+python ¦ w1d1 ¦ Create a virtual environment in .venv with the standard library. ¦ python3 -m venv .venv ‖ python -m venv .venv ¦ -m venv ¦ -m runs a module as a script.
+python ¦ w1d1 ¦ Activate the .venv on macOS/Linux. ¦ source .venv/bin/activate ‖ . .venv/bin/activate ¦ source the activate script ¦ Your prompt shows (.venv) when active; deactivate to leave.
+python ¦ w1d1 ¦ Install requests with pip. ¦ pip install requests ‖ python3 -m pip install requests ‖ python -m pip install requests ¦ pip install ¦ python -m pip guarantees the pip of the right interpreter.
+python ¦ w1d1 ¦ Save installed packages to requirements.txt. ¦ pip freeze > requirements.txt ¦ freeze + redirect ¦ uv projects use pyproject.toml + uv.lock instead.
+python ¦ w1d1 ¦ Install everything listed in requirements.txt. ¦ pip install -r requirements.txt ¦ -r ¦ -r reads requirements from a file.
+python ¦ w1d1 ¦ Create a new uv project called cto-sprint-code. ¦ uv init cto-sprint-code ¦ uv init ¦ Creates pyproject.toml, .python-version and a hello main.py.
+python ¦ w1d2 ¦ Add psycopg with the binary extra using uv. ¦ uv add "psycopg[binary]" ‖ uv add 'psycopg[binary]' ¦ quote the brackets ¦ Quotes stop the shell treating [ ] as a glob.
+python ¦ w3d7 ¦ Run your tests through uv. ¦ uv run pytest ¦ uv run TOOL ¦ Runs inside the project environment.
+python ¦ w3d7 ¦ Run only tests with "rls" in the name, verbosely. ¦ pytest -k rls -v ‖ pytest -v -k rls ‖ uv run pytest -k rls -v ¦ -k expression ¦ -k selects tests by name substring.
+python ¦ w4d1 ¦ Start the FastAPI app object app in main.py with auto-reload via uvicorn. ¦ uvicorn main:app --reload ‖ uv run uvicorn main:app --reload ¦ module:variable ¦ main:app = file main.py, variable app.
+python ¦ w4d1 ¦ Start a FastAPI app in main.py with the fastapi CLI in dev mode. ¦ fastapi dev main.py ‖ uv run fastapi dev main.py ¦ fastapi dev ¦ Dev mode reloads on save. Docs at /docs.
+python ¦ w1d3 ¦ Serve the current folder over HTTP on port 8000. ¦ python3 -m http.server 8000 ‖ python -m http.server 8000 ¦ -m http.server ¦ Handy for sharing files on your LAN.
+python ¦ w1d3 ¦ Pretty-print data.json using only Python's standard library. ¦ python3 -m json.tool data.json ‖ python -m json.tool data.json ¦ -m json.tool ¦ No jq? Python has you covered.
+python ¦ w1d1 ¦ List installed packages in the active environment. ¦ pip list ‖ uv pip list ¦ pip list ¦ pip show NAME for details.
+supabase ¦ w3d4 ¦ Log the Supabase CLI into your account. ¦ supabase login ‖ npx supabase login ¦ login ¦ Opens a browser to create an access token.
+supabase ¦ w3d4 ¦ Create a supabase/ folder for local development. ¦ supabase init ¦ init ¦ Creates supabase/config.toml.
+supabase ¦ w3d4 ¦ Start the local Supabase stack (Docker). ¦ supabase start ¦ start ¦ Prints local API URL, anon key and service_role key.
+supabase ¦ w3d4 ¦ Stop the local Supabase stack. ¦ supabase stop ¦ stop ¦ Data persists unless you add --no-backup.
+supabase ¦ w3d4 ¦ Show local URLs and keys again. ¦ supabase status ¦ status ¦ Lost the anon key? Run this.
+supabase ¦ w3d3 ¦ Create a new migration named add_rls. ¦ supabase migration new add_rls ¦ migration new NAME ¦ Creates a timestamped SQL file in supabase/migrations.
+supabase ¦ w3d3 ¦ Rebuild the local database from migrations and seed. ¦ supabase db reset ¦ db reset ¦ Proves your migrations work from zero.
+supabase ¦ w3d4 ¦ Link this folder to the project with ref abcd1234. ¦ supabase link --project-ref abcd1234 ¦ link --project-ref ¦ Needed before db push.
+supabase ¦ w3d4 ¦ Apply local migrations to the linked remote project. ¦ supabase db push ¦ db push ¦ Runs pending migrations on the remote database.
+supabase ¦ w3d3 ¦ Generate a migration file add_policies from changes you made in the local DB. ¦ supabase db diff -f add_policies ¦ db diff -f NAME ¦ Click-ops in Studio, then capture it as code.
+supabase ¦ w3d4 ¦ Generate TypeScript types from your local schema into types.ts. ¦ supabase gen types typescript --local > types.ts ‖ supabase gen types --lang=typescript --local > types.ts ¦ gen types typescript ¦ Typed queries in your Next.js app.
+supabase ¦ w4d5 ¦ Scaffold an Edge Function called ask. ¦ supabase functions new ask ¦ functions new ¦ Deno TypeScript function in supabase/functions/ask.
+supabase ¦ w4d5 ¦ Deploy the Edge Function ask. ¦ supabase functions deploy ask ¦ functions deploy ¦ Deploys to the linked project.
+supabase ¦ w4d5 ¦ Set the secret OPENAI_API_KEY=sk-123 for Edge Functions. ¦ supabase secrets set OPENAI_API_KEY=sk-123 ¦ secrets set ¦ Read it in Deno with Deno.env.get('OPENAI_API_KEY').
+vercel ¦ w4d5 ¦ Log the Vercel CLI in. ¦ vercel login ¦ login ¦ Then vercel link to connect a folder to a project.
+vercel ¦ w4d5 ¦ Connect this folder to an existing Vercel project. ¦ vercel link ¦ link ¦ Creates .vercel/project.json.
+vercel ¦ w4d5 ¦ Add the environment variable OPENAI_API_KEY to Vercel. ¦ vercel env add OPENAI_API_KEY ¦ env add NAME ¦ Prompts for the value and environments.
+vercel ¦ w4d5 ¦ Download Vercel's development env vars into .env.local. ¦ vercel env pull .env.local ‖ vercel env pull ¦ env pull ¦ .env.local must be in .gitignore.
+vercel ¦ w4d5 ¦ Deploy to production with the Vercel CLI. ¦ vercel --prod ‖ vercel deploy --prod ¦ --prod ¦ Without --prod you get a preview URL.
+ollama ¦ w4d1 ¦ Download the llama3.2 model. ¦ ollama pull llama3.2 ¦ pull ¦ Models live in ~/.ollama/models.
+ollama ¦ w4d1 ¦ Chat with llama3.2 in your terminal. ¦ ollama run llama3.2 ¦ run ¦ Pulls first if needed. /bye to exit.
+ollama ¦ w4d1 ¦ List downloaded models. ¦ ollama list ‖ ollama ls ¦ list ¦ Shows size and modified date.
+ollama ¦ w4d1 ¦ Show which models are loaded in memory right now. ¦ ollama ps ¦ like the process list ¦ Shows CPU/GPU split and when they unload.
+ollama ¦ w4d1 ¦ Delete the llama3.2 model. ¦ ollama rm llama3.2 ¦ rm ¦ Frees several GB.
+ollama ¦ w4d1 ¦ Start the Ollama server manually. ¦ ollama serve ¦ serve ¦ Listens on 127.0.0.1:11434.
+ollama ¦ w4d2 ¦ Download the nomic-embed-text embedding model. ¦ ollama pull nomic-embed-text ¦ pull + model name ¦ 768-dimension embeddings: vector(768).
+ollama ¦ w4d1 ¦ Show details (parameters, template, license) of llama3.2. ¦ ollama show llama3.2 ¦ show ¦ Check the context length here.
+ollama ¦ w4d1 ¦ Unload llama3.2 from memory. ¦ ollama stop llama3.2 ¦ stop ¦ Frees RAM/VRAM immediately.
+ollama ¦ w4d1 ¦ Create a custom model tlc-bot from the file Modelfile. ¦ ollama create tlc-bot -f Modelfile ¦ create NAME -f FILE ¦ A Modelfile sets FROM, SYSTEM prompt and PARAMETERs.
+ollama ¦ w4d1 ¦ Use curl to list models from the local Ollama API. ¦ curl http://localhost:11434/api/tags ‖ curl localhost:11434/api/tags ¦ /api/tags ¦ Quick health check that Ollama is up.
+ollama ¦ w4d1 ¦ Use curl to POST {"model":"llama3.2","prompt":"hi"} to Ollama's generate endpoint. ¦ curl http://localhost:11434/api/generate -d '{"model":"llama3.2","prompt":"hi"}' ‖ curl localhost:11434/api/generate -d '{"model":"llama3.2","prompt":"hi"}' ¦ /api/generate with -d ¦ -d sends the JSON body (and implies POST). Responses stream as JSON lines.
+ollama ¦ w4d2 ¦ Use curl to embed "hello" with nomic-embed-text via /api/embed. ¦ curl http://localhost:11434/api/embed -d '{"model":"nomic-embed-text","input":"hello"}' ‖ curl localhost:11434/api/embed -d '{"model":"nomic-embed-text","input":"hello"}' ¦ /api/embed ¦ Returns {"embeddings": [[...768 floats...]]}.
