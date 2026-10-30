@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { days, weeks } from '../data/days';
-const BADGES = [['first','⚡','First Blood'],['runner','🧪','Lab Rat'],['perfect','🎯','Sniper'],['s3','🔥','On Fire'],['s7','☄️','Unstoppable'],['pom3','🍅','Deep Diver'],['ship','🚢','Shipper'],['boss1','🐉','Hydra Slayer'],['boss2','🌪️','Storm Breaker'],['boss3','👻','Leak Hunter'],['boss4','🔥','Dragon Tamer'],['god','👑','GOD MODE'],['lex','📖','Lexicon'],['cmd50','⌨️','Fingers of Fury'],['combo10','💥','Combo x10'],['shell','🐚','Shell Shocked'],['bashgod','🧙','Bash Wizard'],['recall','🧠','Total Recall']];
+const BADGES = [['first','⚡','First Blood'],['runner','🧪','Lab Rat'],['perfect','🎯','Sniper'],['s3','🔥','On Fire'],['s7','☄️','Unstoppable'],['pom3','🍅','Deep Diver'],['ship','🚢','Shipper'],['boss1','🐉','Hydra Slayer'],['boss2','🌪️','Storm Breaker'],['boss3','👻','Leak Hunter'],['boss4','🔥','Dragon Tamer'],['god','👑','GOD MODE'],['lex','📖','Lexicon'],['cmd50','⌨️','Fingers of Fury'],['combo10','💥','Combo x10'],['shell','🐚','Shell Shocked'],['bashgod','🧙','Bash Wizard'],['recall','🧠','Total Recall'],['rack','🗄️','Rack Builder']];
 ---
 <Base title="Dashboard">
   <section class="hero">
@@ -10,6 +10,17 @@ const BADGES = [['first','⚡','First Blood'],['runner','🧪','Lab Rat'],['perf
     <p style="font-weight:600;max-width:720px">28 days of 5–15 minute micro-missions, live code sandboxes, instant quizzes and 4 boss fights. Ends with a secure RAG assistant over TLC policy docs, public on GitHub.</p>
     <div class="row"><a class="btn w" href="/today">▶ Start today’s mission</a><a class="btn p" href="/journal">✍️ Journal</a></div>
   </section>
+  <link rel="stylesheet" href="/rack.css" />
+  <section class="rk rkhero">
+    <div class="count">START <b data-rack-count>0</b>/7 BUILT</div>
+    <div class="rkgrid">
+      <div data-rack></div>
+      <div><div class="kick" style="color:#FFD43B">Your mission</div><h2>🗄️ Build the Rack</h2>
+        <p>7 blades = a complete AI system. Every day you clear lights one up.</p>
+        <div class="row"><a class="btn w" href="/rack">🗄️ Open the Rack</a><a class="btn w" href="/rack#story">▶ Play the story</a></div></div>
+    </div>
+  </section>
+  <script type="module" src="/rack.js"></script>
 
   <div class="kpis">
     <div class="kpi"><small>Total XP</small><div class="big" data-hud="xp">0</div><small>next level in <span data-hud="tonext">–</span></small></div>

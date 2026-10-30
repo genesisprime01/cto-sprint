@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Build the Rack">
+  <link rel="stylesheet" href="/rack.css" />
+  <section class="rk" data-rack-full>
+    <div class="count">START <b data-rack-count>0</b>/7 BUILT</div>
+    <div class="kick" style="color:#FFD43B">AI engineering = building the whole system</div>
+    <h1>🗄️ Build the Rack</h1>
+    <div class="rkgrid">
+      <div data-rack></div>
+      <div class="rkpanel" data-rack-panel><h3>Tap a blade</h3><p>Each blade is a real part of your TLC Policy Assistant. Lit = built. Ghost = locked, with the day that unlocks it. Clear all 7 for the <b>🗄️ Rack Builder</b> badge (+300 XP).</p></div>
+    </div>
+  </section>
+
+  <section class="rk" id="story" data-story>
+    <div class="count">START <b data-story-count>0</b>/7 BUILT</div>
+    <h2>🎬 Play the story</h2>
+    <div class="stage"><div><div class="vis"></div><div class="cap"></div></div></div>
+    <div class="prog"><i></i></div>
+    <div class="ctrl">
+      <button class="btn w" data-s="prev">◀ Back</button>
+      <button class="btn w" data-s="play">▶ Play the story</button>
+      <button class="btn w" data-s="next">Next ▶</button>
+      <button class="btn w" data-s="step">🎯 Step mode</button>
+      <button class="btn w" data-s="skip">⏭ Skip to end</button>
+    </div>
+  </section>
+
+  <section class="rk" data-rag>
+    <h2>🧩 RAG demo: chunk → index → ask</h2>
+    <p>1) Click or drag a TLC document into the Search Index. 2) Ask a question. 3) Watch the top chunks light up.</p>
+    <div class="docs"></div>
+    <div class="index"><span class="muted" style="color:#ffffff88">🗂️ SEARCH INDEX (empty). Drop docs here.</span></div>
+    <form class="row"><input type="text" placeholder="What’s our incident reporting policy?" aria-label="Ask a question" /><button class="btn w" type="submit">Ask 🤖</button></form>
+    <div data-rag-out></div>
+    <p style="font-size:.85rem;opacity:.75">Runs in your browser with simple word-vector cosine similarity. In Week 4 you replace this with real embeddings + pgvector.</p>
+  </section>
+
+  <section class="rk">
+    <h2>🔥 Stress test</h2>
+    <p>What breaks when TLC goes live? Each problem links to the lesson that fixes it. Green = you’ve already cleared it.</p>
+    <button class="btn w" data-stress-btn>🔥 Stress test the rack</button>
+    <div data-stress></div>
+  </section>
+  <script type="module" src="/rack.js"></script>
+</Base>
