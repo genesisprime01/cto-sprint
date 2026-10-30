@@ -1,0 +1,14 @@
+---
+import type { Q } from '../data/days';
+const { id, qs, boss } = Astro.props as { id: string; qs: Q[]; boss?: number };
+---
+<div data-quiz={id} data-boss={boss}>
+  {qs.map((q) => (
+    <div class="q" data-answer={q.answer}>
+      <p>{q.q}</p>
+      <div class="opts">{q.options.map((o) => <button class="opt" type="button">{o}</button>)}</div>
+      <div class="why">💡 {q.why}</div>
+    </div>
+  ))}
+  <div class="row"><span class="tag">Score</span><b data-score>–</b><button class="btn w" type="button" data-reset>↺ Retry</button></div>
+</div>

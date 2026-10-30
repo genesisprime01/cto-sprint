@@ -1,0 +1,9 @@
+---
+const { id, lang, code, hint } = Astro.props;
+---
+<div class="card sandbox" data-sandbox={lang} data-id={id}>
+  <div class="row"><span class="tag">{lang === 'python' ? '🐍 Python · Pyodide' : '🐘 Postgres 17 · PGlite'}</span><span class="muted" style="font-size:.9rem">{hint}</span></div>
+  <textarea spellcheck="false" aria-label="code">{code}</textarea>
+  <div class="row"><button class="btn g" type="button" data-run>▶ Run (Ctrl/⌘+Enter)</button><button class="btn w" type="button" data-restore>↺ Restore</button></div>
+  <pre>Press Run. Then change something and run again: breaking it on purpose is learning.</pre>
+</div>

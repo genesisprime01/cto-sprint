@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import { marked } from 'marked';
+import { days } from '../../data/days';
+const files = import.meta.glob('../../../journal/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+export function getStaticPaths() { return days.map((d) => ({ params: { slug: d.slug }, props: { d } })); }
+const { d } = Astro.props;
+const raw = (files[`../../../journal/${d.slug}.md`] || '').replace(/^---[\s\S]*?---\s*/, '');
+const html = marked.parse(raw);
+---
+<Base title={`Journal ${d.slug.toUpperCase()}`}>
+  <div class="row" style="margin:18px 0"><a class="btn w" href="/journal">← All entries</a><a class="btn w" href={`/day/${d.slug}`}>Open day mission</a>
+    <a class="btn p" href={`https://github.com/genesisprime01/cto-sprint/edit/main/journal/${d.slug}.md`} target="_blank" rel="noopener">✏️ Edit on GitHub</a></div>
+  <article class="journal" set:html={html} />
+</Base>

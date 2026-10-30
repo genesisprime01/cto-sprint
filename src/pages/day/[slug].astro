@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import Quiz from '../../components/Quiz.astro';
+import Sandbox from '../../components/Sandbox.astro';
+import { days, weeks } from '../../data/days';
+export function getStaticPaths() { return days.map((d, i) => ({ params: { slug: d.slug }, props: { d, prev: days[i - 1], next: days[i + 1] } })); }
+const { d, prev, next } = Astro.props;
+const wk = weeks[d.week - 1];
+const heroCls = d.week === 2 ? 'hero p' : d.week === 3 ? 'hero g' : 'hero';
+const blocks = d.kind === 'learn' ? (d.slug === 'w1d3' ? 'AM 6:15–7:45 only (TLC launch)' : 'AM 6:15–7:45 learn · PM 8:15–9:45 build') : d.kind === 'review' ? 'Sat 9–11 AM review' : 'Sun 9 AM–2 PM SHIP';
+const total = d.missions.reduce((a, m) => a + m.min, 0);
+const repo = 'https://github.com/genesisprime01/cto-sprint';
+---
+<Base title={`${d.slug.toUpperCase()} ${d.title}`}>
+  <section class={heroCls}>
+    <div class="kick">Week {d.week} · Day {d.day} · {d.dow} {d.date} · {blocks}</div>
+    <h1>{d.emoji} {d.title}</h1>
+    <div class="row"><span class="pill">{d.kind === 'ship' ? '🚢 SHIP DAY' : d.kind === 'review' ? '🧠 REVIEW' : '⚔️ MISSION DAY'}</span><span class="pill">⏱ ~{total} min of micro-missions</span><span class="pill">🏆 {d.xp} XP for clearing</span></div>
+  </section>
+
+  <div class="donow"><b>👉 Do this now (2 min)</b>{d.doNow}</div>
+
+  <section class="card">
+    <h2>Micro-missions</h2>
+    <p class="muted" style="margin-top:0">One at a time. Tick it, get the XP hit, move on. Start the 🍅 timer bottom-right.</p>
+    {d.missions.map((m, i) => (
+      <label class="mission" data-mission={`${d.slug}:${i}`}><input type="checkbox" /><span>{m.t}</span><span class="min">{m.min}m · +10</span></label>
+    ))}
+  </section>
+
+  {d.sandbox && (<><h2>🧪 Try it live</h2><Sandbox id={d.slug} lang={d.sandbox.lang} code={d.sandbox.code} hint={d.sandbox.hint} /></>)}
+
+  <section class="card">
+    <h2>⚡ Quick quiz</h2>
+    <p class="muted" style="margin-top:0">+20 XP per correct first try. Wrong answers show why: that’s where memory forms.</p>
+    <Quiz id={d.slug} qs={d.quiz} />
+  </section>
+
+  <section class="card">
+    <h2>📚 Learn more</h2>
+    <div class="links">{d.links.map((l) => <a class={l.w3 ? 'w3' : ''} href={l.href} target="_blank" rel="noopener">{l.w3 ? 'w3schools · ' : ''}{l.title} ↗</a>)}</div>
+  </section>
+
+  <section class="card">
+    <h2>✍️ Journal it</h2>
+    <p>Edit <code>journal/{d.slug}.md</code> in the repo (template is ready). Three lines beats zero lines.</p>
+    <div class="row">
+      <a class="btn p" href={`${repo}/edit/main/journal/${d.slug}.md`} target="_blank" rel="noopener">Edit on GitHub ↗</a>
+      <a class="btn w" href={`/journal/${d.slug}`}>View entry</a>
+      <button class="btn w" type="button" data-journaled={d.slug}>I wrote it (+25)</button>
+    </div>
+  </section>
+
+  {d.kind === 'ship' && (<div class="donow" style="background:#e5dbff"><b>🐉 Boss fight unlocked</b>Week {d.week} checkpoint: {wk.checkpoint} <a href={`/boss/${d.week}`}>Fight {wk.boss} →</a></div>)}
+
+  <div class="row" style="margin-top:22px;justify-content:space-between">
+    {prev ? <a class="btn w" href={`/day/${prev.slug}`}>← {prev.slug.toUpperCase()}</a> : <span />}
+    <button class="btn" type="button" data-complete={d.slug} data-xp={d.xp} data-kind={d.kind}>🏁 Complete day (+{d.xp})</button>
+    {next ? <a class="btn w" href={`/day/${next.slug}`}>{next.slug.toUpperCase()} →</a> : <span />}
+  </div>
+</Base>

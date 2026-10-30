@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import { days } from '../data/days';
+---
+<Base title="Today">
+  <section class="hero"><h1>Finding today’s mission…</h1><p>If nothing happens, <a style="color:#fff" href="/day/w1d1">start at Day 1</a>.</p></section>
+  <script is:inline define:vars={{ list: days.map((d) => [d.date, d.slug]) }}>
+    const t = new Date(); const k = new Date(t - t.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+    const hit = list.find(([d]) => d === k); location.replace('/day/' + (hit ? hit[1] : (k < list[0][0] ? list[0][1] : list[list.length - 1][1])));
+  </script>
+</Base>

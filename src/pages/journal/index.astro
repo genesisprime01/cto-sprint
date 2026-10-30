@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import { days } from '../../data/days';
+const files = import.meta.glob('../../../journal/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const isFilled = (s: string) => !!s && (s.match(/_\(write here\)_/g) || []).length <= 5;
+const rows = days.map((d) => { const raw = files[`../../../journal/${d.slug}.md`] || ''; return { d, filled: isFilled(raw) }; });
+---
+<Base title="Journal">
+  <section class="hero p"><div class="kick">Document everything</div><h1>✍️ Learning Journal</h1>
+    <p style="font-weight:600">One markdown file per day in <code>journal/</code>. Edit on GitHub (pencil icon) or locally, commit, and Vercel republishes in about a minute. Filled entries turn green.</p></section>
+  <div class="grid">
+    {rows.map(({ d, filled }) => (
+      <a class={`tile ${filled ? 'done' : ''}`} href={`/journal/${d.slug}`}><div class="d">{d.slug.toUpperCase()} · {d.date.slice(5)}</div><div class="e">{filled ? '✅' : '📝'}</div><div class="t">{d.title}</div></a>
+    ))}
+  </div>
+</Base>

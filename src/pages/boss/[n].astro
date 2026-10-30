@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import Quiz from '../../components/Quiz.astro';
+import { days, weeks } from '../../data/days';
+export function getStaticPaths() { return weeks.map((w) => ({ params: { n: String(w.n) }, props: { w } })); }
+const { w } = Astro.props;
+const pool = days.filter((d) => d.week === w.n).flatMap((d) => d.quiz);
+const qs = pool.filter((_, i) => i % 2 === 0).concat(pool.filter((_, i) => i % 2 === 1)).slice(0, 10);
+const cls = w.n === 2 ? 'hero p' : w.n === 3 ? 'hero g' : 'hero';
+---
+<Base title={`Boss ${w.n}: ${w.boss}`}>
+  <div class="row" style="margin-top:16px">{weeks.map((x) => <a class={x.n === w.n ? 'btn' : 'btn w'} href={`/boss/${x.n}`}>W{x.n}</a>)}</div>
+  <section class={cls}>
+    <div class="kick">Week {w.n} boss fight · {w.title}</div>
+    <h1>🐉 {w.boss}</h1>
+    <p style="font-weight:600">Score ≥ 80% to defeat it: <b>+500 XP</b> and a badge. Status: <span class="pill" data-boss-state={w.n}>Undefeated</span></p>
+  </section>
+  <section class="card">
+    <h2>⚔️ Round 1: Knowledge strike ({qs.length} hits)</h2>
+    <Quiz id={`boss${w.n}`} qs={qs} boss={w.n} />
+  </section>
+  <section class="card">
+    <h2>🛡️ Round 2: Real-world checkpoint</h2>
+    <p><b>{w.checkpoint}</b></p>
+    <label class="mission" data-mission={`boss${w.n}:proof`}><input type="checkbox" /><span>I can do this out loud, without notes, and it’s committed on GitHub</span><span class="min">+10</span></label>
+    <label class="mission" data-mission={`boss${w.n}:repo`}><input type="checkbox" /><span>Repo URL pasted into my Sunday journal entry</span><span class="min">+10</span></label>
+  </section>
+</Base>

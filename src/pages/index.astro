@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import { days, weeks } from '../data/days';
+const BADGES = [['first','⚡','First Blood'],['runner','🧪','Lab Rat'],['perfect','🎯','Sniper'],['s3','🔥','On Fire'],['s7','☄️','Unstoppable'],['pom3','🍅','Deep Diver'],['ship','🚢','Shipper'],['boss1','🐉','Hydra Slayer'],['boss2','🌪️','Storm Breaker'],['boss3','👻','Leak Hunter'],['boss4','🔥','Dragon Tamer'],['god','👑','GOD MODE']];
+---
+<Base title="Dashboard">
+  <section class="hero">
+    <div class="kick">Hasan’s 4-week CTO sprint · 2–29 Nov 2026 · Sydney</div>
+    <h1>Python + Postgres + LLM.<br />Ship every week. Level up daily.</h1>
+    <p style="font-weight:600;max-width:720px">28 days of 5–15 minute micro-missions, live code sandboxes, instant quizzes and 4 boss fights. Ends with a secure RAG assistant over TLC policy docs, public on GitHub.</p>
+    <div class="row"><a class="btn w" href="/today">▶ Start today’s mission</a><a class="btn p" href="/journal">✍️ Journal</a></div>
+  </section>
+
+  <div class="kpis">
+    <div class="kpi"><small>Total XP</small><div class="big" data-hud="xp">0</div><small>next level in <span data-hud="tonext">–</span></small></div>
+    <div class="kpi"><small>Streak</small><div class="big">🔥<span data-hud="streak">0</span></div><small>best <span data-hud="best">0</span></small></div>
+    <div class="kpi"><small>Days cleared</small><div class="big"><span data-hud="daysdone">0</span>/28</div></div>
+    <div class="kpi"><small>Focus blocks</small><div class="big">🍅<span data-hud="poms">0</span></div></div>
+  </div>
+
+  {weeks.map((w) => (
+    <section class="card">
+      <div class="row"><span class="tag" style={`background:${w.color}`}>Week {w.n}</span><h2 style="margin:0">{w.title}</h2><span class="pill" style="border:2px solid #000" data-week-pct={w.n}>0%</span>
+        <a class="btn w" style="margin-left:auto" href={`/boss/${w.n}`}>🐉 {w.boss} · <span data-boss-state={w.n}>Undefeated</span></a></div>
+      <div class="grid" style="margin-top:12px">
+        {days.filter((d) => d.week === w.n).map((d) => (
+          <a class={`tile ${d.kind}`} href={`/day/${d.slug}`} data-day-tile={d.slug} data-date={d.date}>
+            <div class="d">{d.dow} {d.date.slice(8)} Nov · {d.kind === 'ship' ? 'SHIP' : d.kind === 'review' ? 'REVIEW' : 'D' + d.day}</div>
+            <div class="e">{d.emoji}</div><div class="t">{d.title}</div>
+          </a>))}
+      </div>
+    </section>
+  ))}
+
+  <section class="card"><h2>🏅 Badges</h2>
+    <div class="badges">{BADGES.map(([id, i, n]) => <div class="badge" data-badge={id}><div class="i">{i}</div><div class="n">{n}</div></div>)}</div>
+  </section>
+  <section class="card"><h2>📈 Recent XP</h2><ul data-hud="log"></ul></section>
+  <section class="card"><h2>💾 Your progress</h2>
+    <p class="muted">Progress lives in this browser (localStorage). Export it to move between laptop and phone.</p>
+    <div class="row"><button class="btn w" data-export>⬇ Export</button><label class="btn w">⬆ Import<input type="file" accept="application/json" data-import hidden /></label><button class="btn w" data-wipe>🗑 Reset</button></div>
+  </section>
+  <script is:inline>
+    const t=new Date();const k=new Date(t-t.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+    document.querySelector(`[data-date="${k}"]`)?.classList.add('today');
+  </script>
+</Base>
