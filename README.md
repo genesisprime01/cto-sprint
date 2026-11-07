@@ -1,6 +1,6 @@
 # ⚡ CTO Sprint — 4-Week God Mode
 
-Hasan's gamified learning platform: **Python + Postgres + LLM engineering**, 2–29 Nov 2026.
+Hasan's gamified learning platform: **Python + Postgres + LLM engineering**, 7 Nov – 4 Dec 2026.
 28 days of micro-missions, live in-browser Python & Postgres sandboxes, instant quizzes, XP, levels, streaks, badges, weekly boss fights, a 15/5 focus timer and a public learning journal.
 
 **Live:** https://cto-sprint.vercel.app

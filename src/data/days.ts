@@ -545,11 +545,12 @@ print("Injection test:", "PASS" if "participant" not in fake_rag(inj).lower() el
   links: [{ title: 'w3schools Certificates', href: `${W}/cert/default.asp`, w3: true }, { title: 'AWS AI Practitioner', href: 'https://aws.amazon.com/certification/certified-ai-practitioner/' }, { title: 'EDB training', href: 'https://www.enterprisedb.com/training' }] },
 ];
 
-const DOW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+// Sprint Day 1 = Sat 7 Nov 2026 (Sydney); last day = Fri 4 Dec 2026.
 export const days: Day[] = raw.map((d, i) => {
   const week = Math.floor(i / 7) + 1, day = (i % 7) + 1;
-  const dt = new Date(Date.UTC(2026, 10, 2 + i));
-  return { ...d, week, day, slug: `w${week}d${day}`, dow: DOW[i % 7],
+  const dt = new Date(Date.UTC(2026, 10, 7 + i));
+  return { ...d, week, day, slug: `w${week}d${day}`, dow: DOW[dt.getUTCDay()],
     date: dt.toISOString().slice(0, 10), xp: d.kind === 'ship' ? 300 : d.kind === 'review' ? 150 : 100 };
 });
 

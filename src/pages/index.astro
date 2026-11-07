@@ -5,7 +5,7 @@ const BADGES = [['first','⚡','First Blood'],['runner','🧪','Lab Rat'],['perf
 ---
 <Base title="Dashboard">
   <section class="hero">
-    <div class="kick">Hasan’s 4-week CTO sprint · 2–29 Nov 2026 · Sydney</div>
+    <div class="kick">Hasan’s 4-week CTO sprint · 7 Nov – 4 Dec 2026 · Sydney</div>
     <h1>Python + Postgres + LLM.<br />Ship every week. Level up daily.</h1>
     <p style="font-weight:600;max-width:720px">28 days of 5–15 minute micro-missions, live code sandboxes, instant quizzes and 4 boss fights. Ends with a secure RAG assistant over TLC policy docs, public on GitHub.</p>
     <div class="row"><a class="btn w" href="/today">▶ Start today’s mission</a><a class="btn p" href="/journal">✍️ Journal</a></div>
@@ -36,7 +36,7 @@ const BADGES = [['first','⚡','First Blood'],['runner','🧪','Lab Rat'],['perf
       <div class="grid" style="margin-top:12px">
         {days.filter((d) => d.week === w.n).map((d) => (
           <a class={`tile ${d.kind}`} href={`/day/${d.slug}`} data-day-tile={d.slug} data-date={d.date}>
-            <div class="d">{d.dow} {d.date.slice(8)} Nov · {d.kind === 'ship' ? 'SHIP' : d.kind === 'review' ? 'REVIEW' : 'D' + d.day}</div>
+            <div class="d">{d.dow} {d.date.slice(8)} {d.date.slice(5,7) === '12' ? 'Dec' : 'Nov'} · {d.kind === 'ship' ? 'SHIP' : d.kind === 'review' ? 'REVIEW' : 'D' + d.day}</div>
             <div class="e">{d.emoji}</div><div class="t">{d.title}</div>
           </a>))}
       </div>
